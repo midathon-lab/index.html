@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modern Login Page</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: white;
+    }
+
+    .container {
+        background: rgba(255,255,255,0.1);
+        padding: 30px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 8px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background: #ff7eb3;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #ff4f81;
+    }
+
+    .toggle {
+        margin-top: 10px;
+        cursor: pointer;
+        color: #ffd;
+    }
+
+    .marquee {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .marquee span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: move 10s linear infinite;
+    }
+
+    @keyframes move {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- Moving Text -->
+<div class="marquee">
+    <span>✨ Welcome to Modern Login System | សូមស្វាគមន៍ ✨</span>
+</div>
+
+<div class="container">
+    <h2 id="title">Login</h2>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="submitForm()">Submit</button>
+
+    <div class="toggle" onclick="toggleForm()">
+        Don't have account? Register
+    </div>
+</div>
+
+<script>
+let isLogin = true;
+
+function toggleForm() {
+    isLogin = !isLogin;
+    document.getElementById("title").innerText = isLogin ? "Login" : "Register";
+    document.querySelector(".toggle").innerText = isLogin 
+        ? "Don't have account? Register" 
+        : "Already have account? Login";
+}
+
+function submitForm() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if (!user || !pass) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    if (isLogin) {
+        let storedUser = localStorage.getItem("user");
+        let storedPass = localStorage.getItem("pass");
+
+        if (user === storedUser && pass === storedPass) {
+            alert("Login Success 🎉");
+        } else {
+            alert("Wrong Username or Password ❌");
+        }
+    } else {
+        localStorage.setItem("user", user);
+        localStorage.setItem("pass", pass);
+        alert("Account Created ✅");
+    }
+}
+</script>
+
+</body>
+</html>
